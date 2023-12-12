@@ -15,7 +15,7 @@ else:
     _HOMEDIR = os.path.join(_HOMEDIR, ".config")
 _HOMEDIR = os.path.join(_HOMEDIR, "video-dl")
 os.makedirs(_HOMEDIR, exist_ok=True)
-_CONFIG = os.path.join(_HOMEDIR, "config.pkl")
+_CONFIG_FILE_ = os.path.join(_HOMEDIR, "config.pkl")
 
 
 class MyLogger:
@@ -23,11 +23,6 @@ class MyLogger:
         self.textEdit = textEdit
 
     def debug(self, msg):
-        # For compatibility with youtube-dl, both debug and info are passed into debug
-        # You can distinguish them by the prefix '[debug] '
-        # if msg.startswith("[debug] "):
-        #     pass
-        # else:
         self.info(msg)
 
     def info(self, msg):
@@ -52,15 +47,13 @@ class DownloadThread(QThread):
         self.download_folder = download_folder
 
     def progress_hook(self, d):
-        if d["status"] == "finished":
-            self.parent.textEditLog.append("下载完成，正在转码...")
+        # if d["status"] == "finished":
+        #     self.parent.textEditLog.append("下载完成，正在转码...")
         if d["status"] == "downloading":
-            p = d["_percent_str"].replace("%", "")  # 获取下载进度，去掉 '%'，并转换为整数
+            # p = d["_percent_str"].replace("%", "")  # 获取下载进度，去掉 '%'，并转换为整数
             db = int(d["downloaded_bytes"])
             tb = int(d["total_bytes"])
             self.signal.emit(int(db / tb * 100))  # 发送信号
-        # if d["status"] == "finished":
-        #     self.parent.textEditLog.append("下载完成")
 
     def run(self):
         logger = MyLogger(self.parent.textEditLog)
@@ -153,12 +146,12 @@ class MainUi(QMainWindow, Ui_VideoDl):
             "debug": self.checkBox_debug.isChecked(),
             "savearchive": self.checkBox_savearchive.isChecked(),
         }
-        pickle.dump(opts, open(_CONFIG, "wb"))
+        pickle.dump(opts, open(_CONFIG_FILE_, "wb"))
 
     def load_gui_config(self):
-        if os.path.exists(_CONFIG):
+        if os.path.exists(_CONFIG_FILE_):
             try:
-                opts = pickle.load(open(_CONFIG, "rb"))
+                opts = pickle.load(open(_CONFIG_FILE_, "rb"))
                 self.lineEditUrl.setText(opts["url"])
                 self.label_SaveDir.setText(opts["download_dir"])
                 self.checkBox_savethumbnail.setChecked(opts["savethumbnail"])
