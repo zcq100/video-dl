@@ -31,7 +31,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['recource\\download.ico'],
+    icon=['resource\\download.ico'],
     bundle_identifier='co.r1a.Video-DL',
 )
 coll = COLLECT(
@@ -41,5 +41,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='app',
+    name='video-dl',
 )
