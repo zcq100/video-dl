@@ -124,7 +124,7 @@ border: 0px;
        </size>
       </property>
       <property name="text">
-       <string>支持 Youtube，Bilibili 视频。复制视频或专辑的链接，即可下载。</string>
+       <string>支持 Youtube，Bilibili 各视频网站。复制视频或专辑的链接，即可下载。</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -284,7 +284,7 @@ QPushButton:press{
         </widget>
        </item>
        <item row="8" column="1">
-        <widget class="QCheckBox" name="checkBox_savearcheive">
+        <widget class="QCheckBox" name="checkBox_savearchive">
          <property name="statusTip">
           <string>保存归档文件，在批量下载的时候，可以避免重复下载。</string>
          </property>
@@ -310,6 +310,31 @@ QPushButton:press{
      </widget>
     </item>
     <item>
+     <widget class="QProgressBar" name="progressBar_download">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+      <property name="textVisible">
+       <bool>true</bool>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="textDirection">
+       <enum>QProgressBar::TopToBottom</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QTextEdit" name="textEditLog">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -317,12 +342,24 @@ QPushButton:press{
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="styleSheet">
-       <string notr="true">font: 10pt &quot;Lucida Console&quot;;
-border-radius: 5px;</string>
+       <string notr="true">border-radius: 5px;</string>
+      </property>
+      <property name="lineWrapMode">
+       <enum>QTextEdit::WidgetWidth</enum>
       </property>
       <property name="readOnly">
        <bool>true</bool>
+      </property>
+      <property name="textInteractionFlags">
+       <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
       </property>
      </widget>
     </item>

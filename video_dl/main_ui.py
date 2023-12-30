@@ -17,8 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QFormLayout, QFrame,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QTextEdit,
-    QToolButton, QVBoxLayout, QWidget)
+    QProgressBar, QPushButton, QSizePolicy, QSpacerItem,
+    QTextEdit, QToolButton, QVBoxLayout, QWidget)
 import resource_rc
 
 class Ui_VideoDl(object):
@@ -169,11 +169,11 @@ class Ui_VideoDl(object):
 
         self.formLayout.setWidget(7, QFormLayout.FieldRole, self.checkBox_savethumbnail)
 
-        self.checkBox_savearcheive = QCheckBox(self.frame)
-        self.checkBox_savearcheive.setObjectName(u"checkBox_savearcheive")
-        self.checkBox_savearcheive.setChecked(True)
+        self.checkBox_savearchive = QCheckBox(self.frame)
+        self.checkBox_savearchive.setObjectName(u"checkBox_savearchive")
+        self.checkBox_savearchive.setChecked(True)
 
-        self.formLayout.setWidget(8, QFormLayout.FieldRole, self.checkBox_savearcheive)
+        self.formLayout.setWidget(8, QFormLayout.FieldRole, self.checkBox_savearchive)
 
         self.checkBox_debug = QCheckBox(self.frame)
         self.checkBox_debug.setObjectName(u"checkBox_debug")
@@ -184,6 +184,18 @@ class Ui_VideoDl(object):
 
         self.verticalLayout.addWidget(self.frame)
 
+        self.progressBar_download = QProgressBar(self.centralwidget)
+        self.progressBar_download.setObjectName(u"progressBar_download")
+        self.progressBar_download.setEnabled(True)
+        self.progressBar_download.setStyleSheet(u"")
+        self.progressBar_download.setValue(0)
+        self.progressBar_download.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.progressBar_download.setTextVisible(True)
+        self.progressBar_download.setInvertedAppearance(False)
+        self.progressBar_download.setTextDirection(QProgressBar.TopToBottom)
+
+        self.verticalLayout.addWidget(self.progressBar_download)
+
         self.textEditLog = QTextEdit(self.centralwidget)
         self.textEditLog.setObjectName(u"textEditLog")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -191,9 +203,15 @@ class Ui_VideoDl(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.textEditLog.sizePolicy().hasHeightForWidth())
         self.textEditLog.setSizePolicy(sizePolicy)
-        self.textEditLog.setStyleSheet(u"font: 10pt \"Lucida Console\";\n"
-"border-radius: 5px;")
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        self.textEditLog.setFont(font)
+        self.textEditLog.setStyleSheet(u"border-radius: 5px;")
+        self.textEditLog.setLineWrapMode(QTextEdit.WidgetWidth)
         self.textEditLog.setReadOnly(True)
+        self.textEditLog.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
 
         self.verticalLayout.addWidget(self.textEditLog)
 
@@ -245,7 +263,7 @@ class Ui_VideoDl(object):
         VideoDl.setWindowTitle(QCoreApplication.translate("VideoDl", u"Video Download", None))
         self.label_5.setText("")
         self.label.setText(QCoreApplication.translate("VideoDl", u"\u89c6\u9891\u4e0b\u8f7d", None))
-        self.label_2.setText(QCoreApplication.translate("VideoDl", u"\u652f\u6301 Youtube\uff0cBilibili \u89c6\u9891\u3002\u590d\u5236\u89c6\u9891\u6216\u4e13\u8f91\u7684\u94fe\u63a5\uff0c\u5373\u53ef\u4e0b\u8f7d\u3002", None))
+        self.label_2.setText(QCoreApplication.translate("VideoDl", u"\u652f\u6301 Youtube\uff0cBilibili \u5404\u89c6\u9891\u7f51\u7ad9\u3002\u590d\u5236\u89c6\u9891\u6216\u4e13\u8f91\u7684\u94fe\u63a5\uff0c\u5373\u53ef\u4e0b\u8f7d\u3002", None))
         self.lineEditUrl.setPlaceholderText(QCoreApplication.translate("VideoDl", u"https://", None))
         self.pushButtonDownload.setText(QCoreApplication.translate("VideoDl", u"\u4e0b\u8f7d", None))
         self.label_3.setText(QCoreApplication.translate("VideoDl", u"\u5b58\u653e\u76ee\u5f55", None))
@@ -254,9 +272,9 @@ class Ui_VideoDl(object):
         self.checkBox_forceoverwrite.setText(QCoreApplication.translate("VideoDl", u"\u8986\u76d6\u5b58\u5728\u89c6\u9891", None))
         self.checkBox_savethumbnail.setText(QCoreApplication.translate("VideoDl", u"\u4fdd\u5b58\u7f29\u7565\u56fe", None))
 #if QT_CONFIG(statustip)
-        self.checkBox_savearcheive.setStatusTip(QCoreApplication.translate("VideoDl", u"\u4fdd\u5b58\u5f52\u6863\u6587\u4ef6\uff0c\u5728\u6279\u91cf\u4e0b\u8f7d\u7684\u65f6\u5019\uff0c\u53ef\u4ee5\u907f\u514d\u91cd\u590d\u4e0b\u8f7d\u3002", None))
+        self.checkBox_savearchive.setStatusTip(QCoreApplication.translate("VideoDl", u"\u4fdd\u5b58\u5f52\u6863\u6587\u4ef6\uff0c\u5728\u6279\u91cf\u4e0b\u8f7d\u7684\u65f6\u5019\uff0c\u53ef\u4ee5\u907f\u514d\u91cd\u590d\u4e0b\u8f7d\u3002", None))
 #endif // QT_CONFIG(statustip)
-        self.checkBox_savearcheive.setText(QCoreApplication.translate("VideoDl", u"\u4fdd\u5b58Archive\u8bb0\u5f55", None))
+        self.checkBox_savearchive.setText(QCoreApplication.translate("VideoDl", u"\u4fdd\u5b58Archive\u8bb0\u5f55", None))
         self.checkBox_debug.setText(QCoreApplication.translate("VideoDl", u"Debug", None))
         self.pushButtonClearLog.setText(QCoreApplication.translate("VideoDl", u"\u6e05\u9664", None))
         self.pushButtonOpenDownloadDir.setText(QCoreApplication.translate("VideoDl", u"\u6253\u5f00\u76ee\u5f55", None))
